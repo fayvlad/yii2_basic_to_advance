@@ -4,6 +4,10 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
+    'name'           => 'user-signup',
+    'language'       => 'ru-RU',
+    'sourceLanguage' => 'ru',
+    'timezone' => 'UTC',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -13,6 +17,18 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'i18n'        => [
+            'translations' => [
+                '*' => [
+                    'class'          => 'yii\i18n\PhpMessageSource',
+                    'basePath'       => '@app/messages',
+                    'sourceLanguage' => 'ru',
+                    'fileMap'        => [
+                        //'main' => 'main.php',
+                    ],
+                ],
+            ],
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -38,14 +54,14 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+
     ],
     'params' => $params,
 ];
