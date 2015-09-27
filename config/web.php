@@ -59,6 +59,17 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/'                                                               => 'site/index',
+                '<_a:error>'                                                      => 'site/<_a>',
+                '<_a:[\w\-]+>'                                                    => 'site/<_a>',
+                '<_m:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>'                              => '<_m>/default/<_a>',
+                '<_m:[\w\-]+>/<_a:[\w\-]+>'                                       => '<_m>/default/<_a>',
+                '<_m:[\w\-]+>'                                                    => '<_m>/default/index',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>'                                       => '<_m>/<_c>/index',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>'                 => '<_m>/<_c>/<_a>',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<_a:[\w\-]+>'                          => '<_m>/<_c>/<_a>',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<id:\d+>'                              => '<_m>/<_c>/view',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<alias>'                               => '<_m>/<_c>/view',
             ],
         ],
 
