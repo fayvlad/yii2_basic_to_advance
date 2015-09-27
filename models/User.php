@@ -17,6 +17,7 @@ namespace app\models;
      * @property string $password_reset_token
      * @property string $email
      * @property string $auth_key
+     * @property string $role
      * @property integer $status
      * @property integer $created_at
      * @property integer $updated_at
@@ -26,6 +27,9 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const ROLE_USER = 'user';
+
+    public $role;
 
     /**
      * @inheritdoc
@@ -54,6 +58,23 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
+    }
+
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        // установка роли пользователя
+        $auth = Yii::$app->authManager;
+        $name = $this->role ? $this->role : self::ROLE_USER;
+        $role = $auth->getRole($name);
+        if (!$insert) {
+            $auth->revokeAll($this->id);
+        }
+        $auth->assign($role, $this->id);
     }
 
     /**
